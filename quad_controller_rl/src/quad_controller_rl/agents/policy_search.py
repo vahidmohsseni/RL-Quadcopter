@@ -13,12 +13,15 @@ class RandomPolicySearch(BaseAgent):
         self.state_range = self.task.observation_space.high - self.task.observation_space.low
         self.action_size = np.prod(self.task.action_space.shape)
         self.action_range = self.task.action_space.high - self.task.action_space.low
+        print(self.state_size, self.state_range, self.action_size, self.action_range)
 
         # Policy parameters
         self.w = np.random.normal(
             size=(self.state_size, self.action_size),  # weights for simple linear policy: state_space x action_space
             scale=(self.action_range / (2 * self.state_size)).reshape(1, -1))  # start producing actions in a decent range
 
+        print("random.norm", self.w)
+        
         # Score tracker and learning parameters
         self.best_w = None
         self.best_score = -np.inf
