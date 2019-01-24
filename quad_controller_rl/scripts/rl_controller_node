@@ -22,6 +22,7 @@ def get_subclass(cls, name):
 
 class RLControllerNode:
     def __init__(self, name='rl_controller', num_episodes=10000, update_rate=30, transient_period=0.1):
+        print("starting RLControlNode!..............")
         # Set ROS node and environment params, initialize node
         self.state = 'INIT'  # one of ['INIT', 'RESET', 'EPISODE']; to keep track of current state
         self.name = name  # to identify this ROS node
@@ -47,9 +48,11 @@ class RLControllerNode:
 
     def start(self):
         # Wait till quad_rotor services are ready
+        print("start in RLNode!...")
         rospy.wait_for_service('/quad_rotor/reset_orientation')
         rospy.wait_for_service('/quad_rotor/set_pose')
 
+        print("...!...")
         # Set pub-sub topics and callbacks
         self.pose_sub = rospy.Subscriber("/quad_rotor/pose", PoseStamped, self.sub_callback, queue_size=1)  # latest message only
         self.imu_sub = rospy.Subscriber("/quad_rotor/imu", Imu, self.sub_callback, queue_size=1)  # latest message only
@@ -57,13 +60,16 @@ class RLControllerNode:
         self.cmd_force_pub = rospy.Publisher("/quad_rotor/cmd_force", Wrench, queue_size=10)
 
         # Reset to begin first episode
+        print("resetting...")
         self.reset()
 
         # Loop indefinitely
+        print("started!...")
         self.loop()
 
     def loop(self):
         # Run till shutdown is signalled
+        print("start loop!...")
         rate = rospy.Rate(self.update_rate)  # update task periodically
         while not rospy.is_shutdown():
             rate.sleep()  # handle events, callbacks
@@ -80,6 +86,7 @@ class RLControllerNode:
                     self.cmd_force_pub.publish(cmd)
 
     def reset(self):
+        
         self.state = 'RESET'
 
         # Reset task and set initial conditions
@@ -110,6 +117,7 @@ class RLControllerNode:
             return
         rospy.loginfo("RLControllerNode[{}]: Episode {}".format(self.state, self.episode))  # [debug]
 
+        print("reset done!")
         self.state = 'EPISODE'
 
     def sub_callback(self, msg):
