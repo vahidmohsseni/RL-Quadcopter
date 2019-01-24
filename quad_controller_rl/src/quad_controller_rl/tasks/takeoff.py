@@ -54,6 +54,8 @@ class Takeoff(BaseTask):
             reward -= 10.0  # extra penalty
             done = True
 
+        
+
         # Take one RL step, passing in current state and reward, and obtain action
         # Note: The reward passed in here is the result of past action(s)
         action = self.agent.step(state, reward, done)  # note: action = <force; torque> vector

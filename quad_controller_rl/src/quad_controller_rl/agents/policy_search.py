@@ -21,7 +21,7 @@ class RandomPolicySearch(BaseAgent):
             scale=(self.action_range / (2 * self.state_size)).reshape(1, -1))  # start producing actions in a decent range
 
         print("random.norm", self.w)
-        
+
         # Score tracker and learning parameters
         self.best_w = None
         self.best_score = -np.inf
@@ -38,11 +38,13 @@ class RandomPolicySearch(BaseAgent):
 
     def step(self, state, reward, done):
         # Transform state vector
+        print(state, reward, done)
         state = (state - self.task.observation_space.low) / self.state_range  # scale to [0.0, 1.0]
         state = state.reshape(1, -1)  # convert to row vector
 
         # Choose an action
         action = self.act(state)
+        print("act:", action)
         
         # Save experience / reward
         if self.last_state is not None and self.last_action is not None:
