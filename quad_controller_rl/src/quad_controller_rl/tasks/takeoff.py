@@ -24,7 +24,6 @@ class Takeoff(BaseTask):
             np.array([-max_force, -max_force, -max_force, -max_torque, -max_torque, -max_torque]),
             np.array([ max_force,  max_force,  max_force,  max_torque,  max_torque,  max_torque]))
 
-        print(self.update(None, None, None, None))
         #print("Takeoff(): action_space = {}".format(self.action_space))  # [debug]
 
         # Task-specific parameters
@@ -37,8 +36,8 @@ class Takeoff(BaseTask):
                 position=Point(0.0, 0.0, np.random.normal(0.5, 0.1)),  # drop off from a slight random height
                 orientation=Quaternion(0.0, 0.0, 0.0, 0.0),
             ), Twist(
-                linear=Vector3(0.0, 0.0, 0.0),
-                angular=Vector3(0.0, 0.0, 0.0)
+                linear=Vector3(0.0, 1.0, 0.0),
+                angular=Vector3(0.0, 1.0, 0.0)
             )
 
     def update(self, timestamp, pose, angular_velocity, linear_acceleration):
