@@ -49,9 +49,11 @@ class RLControllerNode:
     def start(self):
         # Wait till quad_rotor services are ready
         print("start in RLNode!...")
-        rospy.wait_for_service('/quad_rotor/reset_orientation')
+        # rospy.wait_for_service('/quad_rotor/reset_orientation')
         print("check for 1 in start")
-        rospy.wait_for_service('/quad_rotor/set_pose')
+        # rospy.wait_for_service('/quad_rotor/set_pose')
+        import time
+        time.sleep(10)
         print("check for 2 in start")
 
 
