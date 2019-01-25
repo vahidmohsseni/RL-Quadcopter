@@ -75,6 +75,7 @@ class RLControllerNode:
         print("start loop!...")
         rate = rospy.Rate(self.update_rate)  # update task periodically
         while not rospy.is_shutdown():
+            print("looping...")
             rate.sleep()  # handle events, callbacks
 
             # Update task, get control action (force command) and whether this episode is done
